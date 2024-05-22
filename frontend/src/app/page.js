@@ -15,6 +15,8 @@ import Grid from "@/components/grid";
 import Rules from "@/components/rules";
 import Photography from "@/components/photography";
 
+const PORT = process.env.NEXT_PUBLIC_LOCAL_STRAPI_PORT || "http://127.0.0.1:1337";
+
 export default async function Home() {
   const data = await getData("/api/voice?populate=*");
   console.log(data);
@@ -24,7 +26,7 @@ export default async function Home() {
       <Positioning />
       <Persona />
       <Values />
-      <Voice />
+      <Voice content={data} port={PORT}/>
       <Boilerplate />
       <Grit />
       <Logos />

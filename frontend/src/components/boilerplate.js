@@ -1,20 +1,6 @@
 import { SecondaryHeader, TertiaryHeader, Paragraph } from "./utilities";
-
-const PORT = process.env.NEXT_PUBLIC_PORT || "http://127.0.0.1:1337";
-const getData = async () => {
-  const res = await fetch(`${PORT}/api/boilerplate?populate=*`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Error on data fetching!");
-  }
-  const jsonRes = await res.json();
-  return jsonRes.data.attributes;
-};
-
-export default async function Boilerplate() {
-  const data = await getData();
-
+export default async function Boilerplate({content}) {  
+  const data = await content.data.attributes;
   return (
     <section className="max-w-5xl mx-auto px-8 relative mb-16 md:mb-32">
       <SecondaryHeader title={data.title} className={"md:mb-14"} />

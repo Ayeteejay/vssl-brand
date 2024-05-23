@@ -1,20 +1,8 @@
 import { PrimaryHeader, WilsonHeader, Paragraph } from "./utilities";
 import Image from "next/image";
 
-const PORT = process.env.NEXT_PUBLIC_PORT || "http://127.0.0.1:1337";
-const getData = async () => {
-  const res = await fetch(`${PORT}/api/grit?populate=*`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Error on data fetching!");
-  }
-  const jsonRes = await res.json();
-  return jsonRes.data.attributes;
-};
-
-export default async function Grit() {
-  const data = await getData();
+export default async function Grit({content, port}) {
+  const data = await content.data.attributes;
   return (
     <section className="relative pb-40 sm:pb-20 sm:mb-20 lg:mt-96 lg:mb-64">
       <div className="relative z-20 grid md:grid-cols-5 md:gap-20 max-w-5xl mx-auto px-8">
@@ -42,7 +30,7 @@ export default async function Grit() {
           className="grid-in-fish z-10 cursor-default md:cursor-pointer"
         >
           <Image
-            src={`${PORT}${data.fish_image.data.attributes.url}`}
+            src={`${port}${data.fish_image.data.attributes.url}`}
             alt={`${data.fish_image.data.attributes.alternativeText}`}
             width={500}
             height={500}
@@ -50,14 +38,14 @@ export default async function Grit() {
           />
         </a>
         <Image
-          src={`${PORT}${data.fisherman_image.data.attributes.url}`}
+          src={`${port}${data.fisherman_image.data.attributes.url}`}
           alt={`${data.fisherman_image.data.attributes.alternativeText}`}
           width={300}
           height={300}
           className="grid-in-crust transition-all duration-500 translate-y-20 lg:translate-y-0 h-auto w-auto"
         />
         <Image
-          src={`${PORT}${data.cliff_image.data.attributes.url}`}
+          src={`${port}${data.cliff_image.data.attributes.url}`}
           alt={`${data.cliff_image.data.attributes.alternativeText}`}
           width={300}
           height={300}

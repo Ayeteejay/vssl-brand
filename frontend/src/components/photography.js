@@ -1,23 +1,8 @@
 import Image from "next/image";
 import { BronzeButton, SecondaryHeader, Paragraph } from "./utilities";
 
-const PORT = process.env.NEXT_PUBLIC_PORT || "http://127.0.0.1:1337";
-const getData = async () => {
-  const res = await fetch(
-    `${PORT}/api/photography?populate[0]=photography&populate[1]=photography.image&populate[2]=photography.image.media&populate[3]=download`,
-    {
-      cache: "no-store",
-    }
-  );
-  if (!res.ok) {
-    throw new Error("Error on data fetching!");
-  }
-  const jsonRes = await res.json();
-  return jsonRes.data.attributes;
-};
-
-export default async function Photography() {
-  const data = await getData();
+export default async function Photography({content, port}) {
+  const data = await content.data.attributes;
   return (
     <section className="relative pb-20 sm:pb-28 overflow-hidden">
       <div className="grid lg:grid-cols-2 md:gap-20 max-w-5xl mx-auto px-8">
@@ -29,7 +14,7 @@ export default async function Photography() {
           />
           <BronzeButton
             title={"Download"}
-            link={`${PORT}${data.download.data.attributes.url}`}
+            link={`${port}${data.download.data.attributes.url}`}
             className={"mb-28 sm:mb-0 mt-10 md:mt-20"}
           />
         </div>
@@ -59,7 +44,7 @@ export default async function Photography() {
           return (
             <Image
               key={photograph.id}
-              src={`${PORT}${photograph.image.data.attributes.url}`}
+              src={`${port}${photograph.image.data.attributes.url}`}
               alt={photograph.image.data.attributes.alternativeText}
               width={photograph.width}
               height={photograph.height}

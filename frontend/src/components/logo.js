@@ -8,23 +8,8 @@ import {
   BronzeButton,
 } from "./utilities";
 
-const PORT = process.env.NEXT_PUBLIC_PORT || "http://127.0.0.1:1337";
-const getData = async () => {
-  const res = await fetch(
-    `${PORT}/api/logo?populate[0]=primary_logos&populate[1]=primary_logos.image&populate[2]=primary_logos.image.media&populate[3]=simplified_logos&populate[4]=simplified_logos.image&populate[5]=simplified_logos.image.media&populate[6]=flag_logos&populate[7]=flag_logos.image&populate[8]=flag_logos.image.media&populate[9]=download`,
-    {
-      cache: "no-store",
-    }
-  );
-  if (!res.ok) {
-    throw new Error("Error on data fetching!");
-  }
-  const jsonRes = await res.json();
-  return jsonRes.data.attributes;
-};
-
-export default async function Logos() {
-  const data = await getData();
+export default async function Logos({content, port}) {
+  const data = await content.data.attributes;
   return (
     <section className="relative">
       <div className="overflow-scroll hidden lg:grid sm:grid-cols-2 md:grid-cols-2 md:w-[550px] xl:w-[750px] absolute right-0 top-[145px]">
@@ -32,7 +17,7 @@ export default async function Logos() {
           return (
             <Image
               key={logo.id}
-              src={`${PORT}${logo.image.data.attributes.url}`}
+              src={`${port}${logo.image.data.attributes.url}`}
               height={2000}
               width={2000}
               alt={logo.image.data.attributes.alternativeText}
@@ -65,7 +50,7 @@ export default async function Logos() {
             return (
               <Image
                 key={logo.id}
-                src={`${PORT}${logo.image.data.attributes.url}`}
+                src={`${port}${logo.image.data.attributes.url}`}
                 height={2000}
                 width={2000}
                 alt={logo.image.data.attributes.alternativeText}
@@ -82,19 +67,19 @@ export default async function Logos() {
             description={data.simplified_description}
             logos={data.simplified_logos}
             salty={data.simplified_salty}
-            port={PORT}
+            port={port}
           />
           <LogoSection
             title={data.flag_title}
             description={data.flag_description}
             logos={data.flag_logos}
             salty={data.flag_salty}
-            port={PORT}
+            port={port}
           />
         </div>
         <BronzeButton
           title="Download"
-          link={`${PORT}${data.download.data.attributes.url}`}
+          link={`${port}${data.download.data.attributes.url}`}
           className={"mt-10 md:mt-20"}
         />
       </div>

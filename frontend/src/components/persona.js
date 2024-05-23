@@ -26,7 +26,7 @@ export default async function Persona({content, port}) {
         <Captain content={data.captain_image} port={port}/>
       </div>
       <div className="grid md:grid-cols-5 mt-10 md:mt-20">
-      <Tattooed content={data.tattooed_image} port={port}/>
+        <Tattooed content={data.tattooed_image} port={port}/>
         <div className="col-span-1"></div>
         <div className="flex col-span-4 md:pl-20 gap-10">
           {data.personas.map((persona) => {

@@ -1,6 +1,6 @@
 "use client";
 import { v4 as uuidv4 } from "uuid";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 // H1
@@ -163,7 +163,7 @@ export function LogoSection(props) {
         {props.logos.map((logo) => {
           return (
             <Image
-              key={logo.id}
+              key={uuidv4()}
               src={`${props.port}${logo.image.data.attributes.url}`}
               height={2000}
               width={2000}
@@ -212,4 +212,44 @@ export function Paragraph(props) {
       })}
     </>
   );
+}
+
+// Captain Image
+export function Captain({content, port}){
+  const { scrollYProgress } = useScroll();
+  const captainTranslateY = useTransform(scrollYProgress, [0, 1], [0, -5000]);
+  return (
+    <motion.div
+    className="hidden md:block relative ml-auto top-96"
+    style={{ translateY: captainTranslateY }}
+  >
+    <Image
+      src={`${port}${content.data.attributes.url}`}
+      alt={`${content.data.attributes.alternativeText}`}
+      width={250}
+      height={250}
+      className="h-auto w-auto"
+    />
+  </motion.div>
+  )
+}
+
+// Tattooed Image
+export function Tattooed({content, port}){
+  const { scrollYProgress } = useScroll();
+  const lydiaTranslateY = useTransform(scrollYProgress, [0, 1], [0, -4000]);
+  return (
+    <motion.div
+    className="absolute top-[1200px] left-0 hidden md:block hover:rotate-2"
+    style={{ translateY: lydiaTranslateY }}
+  >
+    <Image
+      src={`${port}${content.data.attributes.url}`}
+      alt={`${content.data.attributes.alternativeText}`}
+      height={250}
+      width={250}
+      className="h-auto w-auto"
+    />
+  </motion.div>
+  )
 }

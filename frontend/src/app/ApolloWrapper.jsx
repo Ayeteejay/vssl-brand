@@ -10,6 +10,9 @@ import {
 function makeClient() {
   const httpLink = new HttpLink({
     uri: `${process.env.NEXT_PUBLIC_LOCAL_STRAPI_PORT}/graphql`,
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`
+    },
     fetchOptions: { cache: "no-store" },
   });
 

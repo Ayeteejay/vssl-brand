@@ -1,28 +1,20 @@
+import { getClient } from "@/lib/ApolloClient";
+import { GET_DATA_QUERY } from "@/lib/Query";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { PrimaryHeader } from "./utilities";
 
-const PORT = process.env.NEXT_PUBLIC_PORT || "http://127.0.0.1:1337";
-const getData = async () => {
-  const res = await fetch(`${PORT}/api/footer?populate=*`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Error on data fetching!");
-  }
-  const jsonRes = await res.json();
-  return jsonRes.data.attributes;
-};
+const PORT = process.env.NEXT_PUBLIC_LOCAL_STRAPI_PORT || "http://127.0.0.1:1337";
 
-export default async function Footer() {
-  const data = await getData();
+export default async function Footer() {  
+  const { data } = await getClient().query({ query: GET_DATA_QUERY });
   return (
     <footer className="relative max-w-5xl mx-auto px-8 pb-20 sm:pb-40 overflow-hidden">
       <div className="grid md:grid-cols-2 pb-52">
         <div>
-          <PrimaryHeader title={data.title} />
-          {data.description.map((item, index) => {
+          <PrimaryHeader title={data.footer.data.attributes.title} />
+          {data.footer.data.attributes.description.map((item, index) => {
             return (
               <Markdown
                 key={uuidv4()}
@@ -36,8 +28,8 @@ export default async function Footer() {
           })}
         </div>
         <Image
-          src={`${PORT}${data.image.data.attributes.url}`}
-          alt={`${data.image.data.attributes.alternativeText}`}
+          src={`${PORT}${data.footer.data.attributes.image.data.attributes.url}`}
+          alt={`${data.footer.data.attributes.image.data.attributes.alternativeText}`}
           height={2000}
           width={2000}
           className="w-[600px] absolute -bottom-20 -left-5 sm:bottom-auto sm:left-auto sm:top-52 sm:right-10"

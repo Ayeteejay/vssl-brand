@@ -2,6 +2,40 @@ import { gql } from "@apollo/client";
 
 export const GET_DATA_QUERY = gql`
 query{
+	navigation{
+    data{
+      attributes{
+        image{
+          data{
+            attributes{
+              url
+              alternativeText
+              height
+              width
+            }
+          }
+        }
+      }
+    }
+  }
+  footer{
+    data{
+      attributes{
+        title
+        description
+        image{
+          data{
+            attributes{
+              url
+              alternativeText
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
   persona{
   	data{
       attributes{

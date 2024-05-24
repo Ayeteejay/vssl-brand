@@ -5,7 +5,7 @@ import Image from "next/image";
 import Markdown from "react-markdown";
 import { PrimaryHeader } from "./utilities";
 
-const PORT = process.env.NEXT_PUBLIC_LOCAL_STRAPI_PORT || "http://127.0.0.1:1337";
+const PORT = process.env.NEXT_PUBLIC_BACKEND;
 
 export default async function Footer() {  
   const { data } = await getClient().query({ query: GET_DATA_QUERY });

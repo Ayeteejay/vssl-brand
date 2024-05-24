@@ -1,5 +1,5 @@
 export default async function getData(path){ 
-    const PORT = process.env.NEXT_PUBLIC_LOCAL_STRAPI_PORT;
+    const PORT = process.env.NEXT_PUBLIC_BACKEND;
     const res = await fetch(
         `${PORT}${path}`,
         { 

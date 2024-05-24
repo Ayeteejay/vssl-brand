@@ -5,7 +5,7 @@ export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-      uri: `${process.env.NEXT_PUBLIC_LOCAL_STRAPI_PORT}/graphql`,
+      uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`
       }

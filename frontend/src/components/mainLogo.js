@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const PORT = process.env.NEXT_PUBLIC_LOCAL_STRAPI_PORT || "http://127.0.0.1:1337";
+const PORT = process.env.NEXT_PUBLIC_BACKEND;
 
 export default function MainLogo({data}){
     return (
